@@ -1,0 +1,100 @@
+<div class="checkin">
+  <app-top-header title="Check-in online" eyebrow="Llegada sin esperas" [showBack]="true"></app-top-header>
+
+  <div class="checkin__body">
+    <ng-container [ngSwitch]="state">
+      <form *ngSwitchCase="'form'" (ngSubmit)="submit()" class="checkin__form">
+        <p class="checkin__intro">
+          Completa tus datos antes de llegar y recoge la llave directamente, sin pasar por recepción.
+        </p>
+
+        <div class="field">
+          <label>Tipo de documento</label>
+          <div class="segmented">
+            <button
+              type="button"
+              class="segmented__option"
+              [class.segmented__option--active]="form.documentType === 'dni'"
+              (click)="form.documentType = 'dni'"
+            >
+              DNI
+            </button>
+            <button
+              type="button"
+              class="segmented__option"
+              [class.segmented__option--active]="form.documentType === 'nie'"
+              (click)="form.documentType = 'nie'"
+            >
+              NIE
+            </button>
+            <button
+              type="button"
+              class="segmented__option"
+              [class.segmented__option--active]="form.documentType === 'pasaporte'"
+              (click)="form.documentType = 'pasaporte'"
+            >
+              Pasaporte
+            </button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="docNumber">Número de documento</label>
+          <input
+            id="docNumber"
+            type="text"
+            class="form-control"
+            name="docNumber"
+            [(ngModel)]="form.documentNumber"
+            placeholder="00000000A"
+          />
+        </div>
+
+        <div class="field">
+          <label for="phone">Teléfono de contacto</label>
+          <input
+            id="phone"
+            type="tel"
+            class="form-control"
+            name="phone"
+            [(ngModel)]="form.phone"
+            placeholder="+34 600 000 000"
+          />
+        </div>
+
+        <div class="field">
+          <label for="arrival">Hora estimada de llegada</label>
+          <input id="arrival" type="time" class="form-control" name="arrival" [(ngModel)]="form.estimatedArrival" />
+        </div>
+
+        <div class="field">
+          <label for="requests">Peticiones especiales</label>
+          <textarea
+            id="requests"
+            class="form-control"
+            rows="3"
+            name="requests"
+            [(ngModel)]="form.specialRequests"
+            placeholder="Cama supletoria, piso alto, alergias..."
+          ></textarea>
+        </div>
+
+        <p class="checkin__error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+        <button type="submit" class="btn btn-primary btn-block">Completar check-in</button>
+      </form>
+
+      <div *ngSwitchCase="'loading'" class="checkin__state">
+        <div class="spinner-lg"></div>
+        <p>Verificando tus datos...</p>
+      </div>
+
+      <div *ngSwitchCase="'success'" class="checkin__state">
+        <span class="material-icons-round checkin__state-icon">check_circle</span>
+        <h2>¡Check-in completado!</h2>
+        <p>Tu habitación {{ stay?.roomNumber }} estará lista a partir de las {{ stay?.checkInTime }}.</p>
+        <button class="btn btn-primary btn-block" (click)="goHome()">Volver al inicio</button>
+      </div>
+    </ng-container>
+  </div>
+</div>

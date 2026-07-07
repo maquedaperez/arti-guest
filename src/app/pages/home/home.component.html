@@ -1,0 +1,51 @@
+<div class="home">
+  <div class="home__header">
+    <div>
+      <span class="home__eyebrow">{{ hotel.name }}</span>
+      <h1 class="home__greeting">{{ greeting }}, {{ guest?.firstName }}</h1>
+    </div>
+    <div class="home__avatar">{{ hotel.logoInitials }}</div>
+  </div>
+
+  <div class="keycard" *ngIf="stay">
+    <div class="keycard__notch"></div>
+    <div class="keycard__row">
+      <span class="keycard__label">Habitación</span>
+      <span class="keycard__room">{{ stay.roomNumber }}</span>
+    </div>
+    <div class="keycard__row keycard__row--split">
+      <div>
+        <span class="keycard__label">Entrada</span>
+        <span class="keycard__value">{{ stay.checkInDate }} · {{ stay.checkInTime }}</span>
+      </div>
+      <div>
+        <span class="keycard__label">Salida</span>
+        <span class="keycard__value">{{ stay.checkOutDate }} · {{ stay.checkOutTime }}</span>
+      </div>
+    </div>
+    <div class="keycard__footer">
+      <span>{{ stay.roomType }}</span>
+      <span>{{ stay.nightsTotal }} noches</span>
+    </div>
+  </div>
+
+  <h2 class="home__section-title">Accesos rápidos</h2>
+  <div class="quick-grid">
+    <button class="quick-tile" *ngFor="let action of quickActions" (click)="navigate(action.path)">
+      <span class="material-icons-round quick-tile__icon">{{ action.icon }}</span>
+      <span class="quick-tile__label">{{ action.label }}</span>
+    </button>
+  </div>
+
+  <h2 class="home__section-title">Hoy en {{ hotel.name }}</h2>
+  <div class="schedule-list">
+    <div class="schedule-row" *ngFor="let schedule of hotel.schedules">
+      <span class="material-icons-round schedule-row__icon">{{ schedule.icon }}</span>
+      <div class="schedule-row__info">
+        <span class="schedule-row__name">{{ schedule.name }}</span>
+        <span class="schedule-row__location" *ngIf="schedule.location">{{ schedule.location }}</span>
+      </div>
+      <span class="schedule-row__hours">{{ schedule.hours }}</span>
+    </div>
+  </div>
+</div>

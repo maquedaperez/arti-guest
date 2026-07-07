@@ -1,0 +1,263 @@
+.room-service {
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.room-service__body {
+  padding: 0 20px 40px;
+}
+
+.room-service__loading {
+  padding: 60px 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 18px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tabs__tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+
+  .material-icons-round {
+    font-size: 16px;
+  }
+}
+
+.tabs__tab--active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--text-on-ink);
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.menu-item__icon {
+  font-size: 24px;
+  color: var(--forest);
+  flex-shrink: 0;
+}
+
+.menu-item__info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.menu-item__name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.menu-item__desc {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  margin: 2px 0 4px;
+}
+
+.menu-item__price {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--brass);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.stepper__btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.stepper__btn--add {
+  background: var(--ink);
+  color: var(--text-on-ink);
+  border-color: var(--ink);
+}
+
+.stepper__count {
+  min-width: 16px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.order-tracker {
+  margin-top: 8px;
+}
+
+.order-tracker__title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.order-tracker__item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+
+.order-tracker__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+}
+
+.order-tracker__lines {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.cart-fab {
+  position: fixed;
+  left: 20px;
+  right: 20px;
+  bottom: 92px;
+  max-width: 440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--brass);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  z-index: 15;
+}
+
+.cart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cart__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+
+.cart__line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.cart__notes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 8px 0;
+
+  label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  textarea {
+    resize: vertical;
+    font-family: inherit;
+  }
+}
+
+.cart__total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 10px 0;
+  margin-bottom: 8px;
+}
+
+.room-service__state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 56px 20px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+  }
+
+  p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    margin-top: 8px;
+    width: 100%;
+  }
+}
+
+.room-service__state-icon {
+  font-size: 50px;
+  color: var(--success);
+}

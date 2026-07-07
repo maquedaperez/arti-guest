@@ -1,0 +1,49 @@
+<div class="access">
+  <div class="access__scene">
+    <span class="access__eyebrow">{{ hotel.name }}</span>
+    <h1 class="access__title">{{ hotel.claim }}</h1>
+
+    <div class="qr-card">
+      <div class="qr-card__pattern" aria-hidden="true">
+        <span *ngFor="let cell of qrCells" class="qr-card__cell" [class.qr-card__cell--on]="cell"></span>
+      </div>
+      <p class="qr-card__caption">Escanea el código en tu habitación<br />o introduce tu nº de habitación</p>
+    </div>
+  </div>
+
+  <div class="access__card">
+    <form (ngSubmit)="submit()" class="access__form">
+      <div class="field">
+        <label for="room">Número de habitación</label>
+        <input
+          id="room"
+          type="text"
+          inputmode="numeric"
+          class="form-control"
+          name="room"
+          [(ngModel)]="roomNumber"
+          placeholder="Ej. 315"
+        />
+      </div>
+
+      <div class="field">
+        <label for="lastName">Apellido del titular</label>
+        <input
+          id="lastName"
+          type="text"
+          class="form-control"
+          name="lastName"
+          [(ngModel)]="lastName"
+          placeholder="Para verificar tu reserva"
+        />
+      </div>
+
+      <p class="access__error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="loading">
+        <span *ngIf="!loading">Acceder a mi estancia</span>
+        <span *ngIf="loading" class="spinner-sm"></span>
+      </button>
+    </form>
+  </div>
+</div>

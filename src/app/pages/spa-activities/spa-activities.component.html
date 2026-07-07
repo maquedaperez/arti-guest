@@ -1,0 +1,85 @@
+<div class="spa">
+  <app-top-header title="Spa y actividades" eyebrow="Cuida tu estancia" [showBack]="true"></app-top-header>
+
+  <div class="spa__body">
+    <ng-container [ngSwitch]="mode">
+      <ng-container *ngSwitchCase="'list'">
+        <div class="tabs">
+          <button
+            class="tabs__tab"
+            [class.tabs__tab--active]="activeKind === 'spa'"
+            (click)="activeKind = 'spa'"
+          >
+            <span class="material-icons-round">spa</span>
+            Spa
+          </button>
+          <button
+            class="tabs__tab"
+            [class.tabs__tab--active]="activeKind === 'activity'"
+            (click)="activeKind = 'activity'"
+          >
+            <span class="material-icons-round">hiking</span>
+            Actividades
+          </button>
+        </div>
+
+        <div class="spa__loading" *ngIf="loading">
+          <div class="spinner-lg"></div>
+        </div>
+
+        <div class="experience-list" *ngIf="!loading">
+          <button class="experience-card" *ngFor="let experience of visibleExperiences" (click)="openBooking(experience)">
+            <span class="material-icons-round experience-card__icon">{{ experience.icon }}</span>
+            <div class="experience-card__info">
+              <span class="experience-card__name">{{ experience.name }}</span>
+              <span class="experience-card__desc">{{ experience.description }}</span>
+              <span class="experience-card__meta">{{ experience.duration }} · {{ experience.price > 0 ? (experience.price + ' €') : 'Incluido' }}</span>
+            </div>
+            <span class="material-icons-round experience-card__chevron">chevron_right</span>
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'booking'">
+        <div class="booking" *ngIf="selectedExperience as experience">
+        <div class="booking__header">
+          <span class="material-icons-round">{{ experience.icon }}</span>
+          <div>
+            <h2>{{ experience.name }}</h2>
+            <p>{{ experience.description }}</p>
+          </div>
+        </div>
+
+        <label class="booking__label">Elige una hora disponible hoy</label>
+        <div class="slot-grid">
+          <button
+            *ngFor="let slot of experience.slots"
+            class="slot"
+            [class.slot--active]="selectedSlot === slot"
+            (click)="selectedSlot = slot"
+          >
+            {{ slot }}
+          </button>
+        </div>
+
+        <button class="btn btn-primary btn-block" [disabled]="!selectedSlot" (click)="confirm()">
+          Reservar {{ selectedSlot }}
+        </button>
+        <button class="btn btn-ghost btn-block" (click)="backToList()">Volver</button>
+        </div>
+      </ng-container>
+
+      <div *ngSwitchCase="'confirming'" class="spa__state">
+        <div class="spinner-lg"></div>
+        <p>Confirmando tu reserva...</p>
+      </div>
+
+      <div *ngSwitchCase="'confirmed'" class="spa__state">
+        <span class="material-icons-round spa__state-icon">check_circle</span>
+        <h2>¡Reserva confirmada!</h2>
+        <p>{{ selectedExperience?.name }} hoy a las {{ selectedSlot }}.</p>
+        <button class="btn btn-primary btn-block" (click)="reset()">Ver más experiencias</button>
+      </div>
+    </ng-container>
+  </div>
+</div>

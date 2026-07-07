@@ -1,0 +1,68 @@
+<div class="checkout">
+  <app-top-header title="Check-out" eyebrow="Hasta pronto" [showBack]="true"></app-top-header>
+
+  <div class="checkout__body">
+    <ng-container [ngSwitch]="state">
+      <div *ngSwitchCase="'summary'" class="checkout__card">
+        <h2 class="checkout__section-title">Resumen de tu factura</h2>
+        <div class="invoice-row">
+          <span>Alojamiento · {{ stay?.nightsTotal }} noches</span>
+          <span>{{ (stay?.balance ?? 0) - 28.5 | number: '1.2-2' }} €</span>
+        </div>
+        <div class="invoice-row">
+          <span>Room Service y extras</span>
+          <span>28,50 €</span>
+        </div>
+        <div class="invoice-row invoice-row--total">
+          <span>Total</span>
+          <span>{{ stay?.balance | number: '1.2-2' }} €</span>
+        </div>
+
+        <button class="btn btn-primary btn-block" (click)="requestCheckout()">Solicitar check-out</button>
+        <button class="btn btn-ghost btn-block">Solicitar factura por email</button>
+      </div>
+
+      <div *ngSwitchCase="'loading'" class="checkout__state">
+        <div class="spinner-lg"></div>
+        <p>Procesando tu salida...</p>
+      </div>
+
+      <div *ngSwitchCase="'requested'" class="checkout__state">
+        <span class="material-icons-round checkout__state-icon">task_alt</span>
+        <h2>Check-out solicitado</h2>
+        <p>Recepción está preparando tu salida. Puedes dejar la habitación cuando quieras.</p>
+
+        <div class="rating">
+          <p class="rating__label">¿Cómo valorarías tu estancia?</p>
+          <div class="rating__stars">
+            <button
+              type="button"
+              *ngFor="let star of [1, 2, 3, 4, 5]"
+              class="rating__star"
+              [class.rating__star--active]="star <= rating"
+              (click)="setRating(star)"
+            >
+              <span class="material-icons-round">star</span>
+            </button>
+          </div>
+          <textarea
+            class="form-control"
+            rows="3"
+            [(ngModel)]="comment"
+            placeholder="Cuéntanos qué te ha parecido (opcional)"
+          ></textarea>
+          <button class="btn btn-primary btn-block" [disabled]="rating === 0" (click)="submitFeedback()">
+            Enviar valoración
+          </button>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'rated'" class="checkout__state">
+        <span class="material-icons-round checkout__state-icon">favorite</span>
+        <h2>¡Gracias por tu valoración!</h2>
+        <p>Esperamos verte de nuevo pronto en {{ stay?.roomType }}.</p>
+        <button class="btn btn-primary btn-block" (click)="goHome()">Volver al inicio</button>
+      </div>
+    </ng-container>
+  </div>
+</div>

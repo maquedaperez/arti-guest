@@ -1,0 +1,11 @@
+{
+  "name": "ARTI Guest · Hotel Almara",
+  "short_name": "ARTI Guest",
+  "description": "Recepción digital del huésped",
+  "start_url": "/access",
+  "display": "standalone",
+  "background_color": "#16262b",
+  "theme_color": "#16262b",
+  "orientation": "portrait",
+  "icons": []
+}

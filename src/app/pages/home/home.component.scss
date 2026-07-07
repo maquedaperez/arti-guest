@@ -1,0 +1,216 @@
+.home {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+}
+
+.home__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.home__eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 4px;
+}
+
+.home__greeting {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.home__avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--text-on-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.keycard {
+  position: relative;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-light) 100%);
+  color: var(--text-on-ink);
+  border-radius: var(--radius-lg);
+  padding: 22px 22px 18px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-lg);
+  animation: fadeInUp 0.4s ease;
+  overflow: hidden;
+}
+
+.keycard::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(169, 130, 76, 0.25), transparent 70%);
+}
+
+.keycard__notch {
+  position: absolute;
+  top: 0;
+  right: 28px;
+  width: 34px;
+  height: 12px;
+  background: var(--paper);
+  border-radius: 0 0 8px 8px;
+}
+
+.keycard__row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.keycard__row--split {
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.keycard__label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(246, 243, 236, 0.55);
+  margin-bottom: 4px;
+}
+
+.keycard__room {
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.keycard__value {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.keycard__footer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.76rem;
+  color: rgba(246, 243, 236, 0.65);
+  padding-top: 12px;
+  border-top: 1px dashed rgba(246, 243, 236, 0.2);
+}
+
+.home__section-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin: 8px 0 14px;
+  color: var(--text);
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.quick-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.quick-tile:hover {
+  border-color: var(--brass);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.quick-tile__icon {
+  font-size: 24px;
+  color: var(--brass);
+}
+
+.quick-tile__label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.schedule-row__icon {
+  font-size: 20px;
+  color: var(--forest);
+  flex-shrink: 0;
+}
+
+.schedule-row__info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.schedule-row__name {
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.schedule-row__location {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.schedule-row__hours {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}

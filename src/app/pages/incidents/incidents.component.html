@@ -1,0 +1,84 @@
+<div class="incidents">
+  <app-top-header title="Incidencias" eyebrow="Reporta y sigue una avería" [showBack]="true"></app-top-header>
+
+  <div class="incidents__body">
+    <ng-container [ngSwitch]="mode">
+      <ng-container *ngSwitchCase="'list'">
+        <button class="new-incident-btn" (click)="startNew()">
+          <span class="material-icons-round">add_circle</span>
+          Reportar una avería o problema
+        </button>
+
+        <div class="incidents__empty" *ngIf="incidents.length === 0">
+          <span class="material-icons-round">task_alt</span>
+          <p>No tienes incidencias abiertas. Todo en orden.</p>
+        </div>
+
+        <div class="incident-card" *ngFor="let incident of incidents">
+          <div class="incident-card__row">
+            <span class="incident-card__category">{{ incident.categoryName }}</span>
+            <app-status-badge [label]="statusLabel(incident.status)" [tone]="statusTone(incident.status)"></app-status-badge>
+          </div>
+          <p class="incident-card__desc">{{ incident.description }}</p>
+          <div class="incident-card__meta">
+            <span *ngIf="incident.hasPhoto" class="incident-card__photo">
+              <span class="material-icons-round">photo_camera</span> Con foto
+            </span>
+            <span>{{ incident.id }}</span>
+          </div>
+        </div>
+      </ng-container>
+
+      <form *ngSwitchCase="'new'" class="incident-form" (ngSubmit)="submit()">
+        <label class="incident-form__label">¿Qué tipo de problema tienes?</label>
+        <div class="category-grid">
+          <button
+            type="button"
+            *ngFor="let category of categories"
+            class="category-tile"
+            [class.category-tile--active]="selectedCategoryId === category.id"
+            (click)="selectedCategoryId = category.id"
+          >
+            <span class="material-icons-round">{{ category.icon }}</span>
+            {{ category.name }}
+          </button>
+        </div>
+
+        <div class="field">
+          <label for="desc">Cuéntanos qué ha pasado</label>
+          <textarea
+            id="desc"
+            class="form-control"
+            rows="3"
+            [(ngModel)]="description"
+            name="description"
+            placeholder="El aire acondicionado no enfría desde esta tarde..."
+          ></textarea>
+        </div>
+
+        <button type="button" class="photo-btn" (click)="attachPhoto()" [class.photo-btn--active]="photoAttached">
+          <span class="material-icons-round">{{ photoAttached ? 'check_circle' : 'add_a_photo' }}</span>
+          {{ photoAttached ? 'Foto adjuntada' : 'Adjuntar foto (opcional)' }}
+        </button>
+
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="!selectedCategoryId || !description">
+          Enviar incidencia
+        </button>
+        <button type="button" class="btn btn-ghost btn-block" (click)="cancelNew()">Cancelar</button>
+      </form>
+
+      <div *ngSwitchCase="'sending'" class="incidents__state">
+        <div class="spinner-lg"></div>
+        <p>Enviando tu incidencia al equipo técnico...</p>
+      </div>
+
+      <div *ngSwitchCase="'sent'" class="incidents__state">
+        <span class="material-icons-round incidents__state-icon">check_circle</span>
+        <h2>Incidencia registrada</h2>
+        <p>Hemos avisado al equipo técnico. Te avisaremos cuando quede resuelta.</p>
+        <span class="incidents__state-id">{{ lastIncident?.id }}</span>
+        <button class="btn btn-primary btn-block" (click)="backToList()">Ver mis incidencias</button>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="room-service">
+  <app-top-header title="Room Service" eyebrow="A tu habitación" [showBack]="true"></app-top-header>
+
+  <div class="room-service__body">
+    <ng-container [ngSwitch]="mode">
+      <ng-container *ngSwitchCase="'menu'">
+        <div class="tabs" *ngIf="!loading">
+          <button
+            *ngFor="let category of categories"
+            class="tabs__tab"
+            [class.tabs__tab--active]="activeCategoryId === category.id"
+            (click)="activeCategoryId = category.id"
+          >
+            <span class="material-icons-round">{{ category.icon }}</span>
+            {{ category.name }}
+          </button>
+        </div>
+
+        <div class="room-service__loading" *ngIf="loading">
+          <div class="spinner-lg"></div>
+        </div>
+
+        <div class="menu-list" *ngIf="!loading">
+          <div class="menu-item" *ngFor="let item of visibleItems">
+            <span class="material-icons-round menu-item__icon">{{ item.icon }}</span>
+            <div class="menu-item__info">
+              <span class="menu-item__name">{{ item.name }}</span>
+              <span class="menu-item__desc">{{ item.description }}</span>
+              <span class="menu-item__price">{{ item.price | number: '1.2-2' }} €</span>
+            </div>
+            <div class="stepper">
+              <button
+                class="stepper__btn"
+                *ngIf="quantityFor(item) > 0"
+                (click)="remove(item)"
+              >
+                −
+              </button>
+              <span class="stepper__count" *ngIf="quantityFor(item) > 0">{{ quantityFor(item) }}</span>
+              <button class="stepper__btn stepper__btn--add" (click)="add(item)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-tracker" *ngIf="orders.length > 0">
+          <h2 class="order-tracker__title">Tus pedidos de hoy</h2>
+          <div class="order-tracker__item" *ngFor="let order of orders">
+            <div class="order-tracker__row">
+              <span>{{ order.id }}</span>
+              <app-status-badge [label]="statusLabel(order.status)" [tone]="statusTone(order.status)"></app-status-badge>
+            </div>
+            <span class="order-tracker__lines">{{ order.lines.length }} artículos · {{ order.total | number: '1.2-2' }} €</span>
+          </div>
+        </div>
+      </ng-container>
+
+      <div *ngSwitchCase="'cart'" class="cart">
+        <h2 class="cart__title">Tu pedido</h2>
+        <div class="cart__line" *ngFor="let line of cart">
+          <span>{{ line.quantity }}× {{ line.item.name }}</span>
+          <span>{{ line.item.price * line.quantity | number: '1.2-2' }} €</span>
+        </div>
+
+        <div class="field cart__notes">
+          <label>Notas para cocina (opcional)</label>
+          <textarea class="form-control" rows="2" [(ngModel)]="notes" placeholder="Sin gluten, sin hielo..."></textarea>
+        </div>
+
+        <div class="cart__total">
+          <span>Total</span>
+          <span>{{ cartTotal | number: '1.2-2' }} €</span>
+        </div>
+
+        <button class="btn btn-primary btn-block" (click)="placeOrder()">Confirmar pedido</button>
+        <button class="btn btn-ghost btn-block" (click)="backToMenu()">Seguir viendo la carta</button>
+      </div>
+
+      <div *ngSwitchCase="'placing'" class="room-service__state">
+        <div class="spinner-lg"></div>
+        <p>Enviando tu pedido a cocina...</p>
+      </div>
+
+      <div *ngSwitchCase="'placed'" class="room-service__state">
+        <span class="material-icons-round room-service__state-icon">check_circle</span>
+        <h2>¡Pedido enviado!</h2>
+        <p>Tu pedido {{ lastOrder?.id }} llegará a tu habitación en unos 25-30 minutos.</p>
+        <button class="btn btn-primary btn-block" (click)="backToMenu()">Volver a la carta</button>
+      </div>
+    </ng-container>
+  </div>
+
+  <button class="cart-fab" *ngIf="mode === 'menu' && cartCount > 0" (click)="openCart()">
+    <span class="material-icons-round">shopping_bag</span>
+    Ver pedido ({{ cartCount }}) · {{ cartTotal | number: '1.2-2' }} €
+  </button>
+</div>

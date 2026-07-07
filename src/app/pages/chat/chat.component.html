@@ -1,0 +1,41 @@
+<div class="chat">
+  <app-top-header title="Asistente IA" eyebrow="Basado en Copilot" [showBack]="true"></app-top-header>
+
+  <div class="chat__messages">
+    <div *ngFor="let message of messages" class="bubble-row" [class.bubble-row--user]="message.role === 'user'">
+      <div class="bubble" [class.bubble--user]="message.role === 'user'">
+        <p>{{ message.text }}</p>
+        <span class="bubble__time">{{ message.timestamp }}</span>
+      </div>
+    </div>
+
+    <div class="bubble-row" *ngIf="thinking">
+      <div class="bubble bubble--thinking">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <div #scrollAnchor></div>
+  </div>
+
+  <div class="chat__suggestions" *ngIf="messages.length <= 1">
+    <button class="suggestion" *ngFor="let suggestion of suggestions" (click)="send(suggestion)">
+      {{ suggestion }}
+    </button>
+  </div>
+
+  <form class="chat__composer" (ngSubmit)="send()">
+    <input
+      type="text"
+      class="form-control"
+      name="draft"
+      [(ngModel)]="draft"
+      placeholder="Escribe tu pregunta..."
+    />
+    <button type="submit" class="chat__send" [disabled]="!draft.trim()">
+      <span class="material-icons-round">send</span>
+    </button>
+  </form>
+</div>
